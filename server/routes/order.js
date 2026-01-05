@@ -186,7 +186,14 @@ router.put(
 
 
 
-
+router.get("/admin/pending-count", auth, isAdmin, async (req, res) => {
+  try {
+    const count = await Order.countDocuments({ status: "pending" });
+    res.json({ count });
+  } catch (err) {
+    res.status(500).json({ message: "Server error" });
+  }
+});
 
 
 

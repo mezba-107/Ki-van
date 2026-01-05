@@ -13,6 +13,7 @@ import productRoutes from "./routes/productRoutes.js";
 import uploadRoutes from "./routes/uploadRoutes.js";
 import cartRoutes from "./routes/cartRoutes.js";
 import messageRoutes from "./routes/messageRoutes.js";
+import adminOrdersRoute from "./routes/adminOrders.js";
 
 dotenv.config({ path: "./server/.env" });
 
@@ -52,6 +53,7 @@ app.use("/api/products", productRoutes);
 app.use("/api/upload", uploadRoutes);
 app.use("/api/cart", cartRoutes);
 app.use("/api/messages", messageRoutes);
+app.use("/api/orders", adminOrdersRoute);
 app.use("/uploads", express.static(path.join(process.cwd(), "server/uploads")));
 
 
