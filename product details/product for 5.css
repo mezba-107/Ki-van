@@ -436,3 +436,103 @@ select:focus{
 .small-img-col{
     margin: 4px;
 }
+
+
+
+
+
+
+
+/* Add to Cart fly animation */
+.fly-img {
+  position: fixed;
+  z-index: 9999;
+  width: 120px;
+  height: auto;
+  pointer-events: none;
+  border-radius: 10px;
+  transition: all 0.8s ease-in-out;
+  opacity: 0.9;
+}
+
+
+
+
+
+/* Toast Style */
+.toast {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  background: #222;
+  color: #fff;
+  padding: 14px 20px;
+  border-radius: 8px;
+  font-size: 14px;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(20px);
+  transition: all 0.4s ease;
+  z-index: 99999;
+}
+
+/* Show State */
+.toast.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Warning */
+.toast.warn {
+  background: #ff523b;
+}
+
+/* Success */
+.toast.success {
+  background: #ffffff;
+}
+
+
+
+
+
+/* cart count */
+
+.cart-wrapper {
+  position: relative;
+}
+
+#cart-count {
+  position: absolute;
+  top: -6px;
+  right: -10px;
+  background: #ff523b;
+  color: white;
+  font-size: 12px;
+  min-width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  transform: scale(0);
+  transition: transform 0.25s ease;
+}
+
+/* visible হলে */
+#cart-count.show {
+  transform: scale(1);
+}
+
+/* add to cart animation */
+#cart-count.bump {
+  animation: bump 0.35s ease;
+}
+
+@keyframes bump {
+  0%   { transform: scale(1); }
+  30%  { transform: scale(1.4); }
+  60%  { transform: scale(0.9); }
+  100% { transform: scale(1); }
+}

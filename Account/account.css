@@ -14,6 +14,119 @@
      --gradient-bg: radial-gradient(#fff, #ffd6d6);
 }
 
+
+/* ===============================
+   🌟 NAVBAR BEAUTIFICATION (FIXED)
+   ✅ DARK + LIGHT MODE BOTH OK
+================================ */
+
+.navbar {
+    background: rgba(255, 255, 255, 0.88);
+    backdrop-filter: blur(14px);
+    border-radius: 18px;
+
+    /* ✨ SOFT GLOW SHADOW */
+    box-shadow:
+        0 12px 35px rgba(0, 0, 0, 0.12),
+        0 0 60px rgba(241, 80, 31, 0.25);
+
+    transition: all 0.3s ease;
+}
+
+
+/* ===============================
+   🌙 DARK MODE NAVBAR
+================================ */
+.darkmode .navbar {
+    background: rgba(16, 20, 37, 0.85);
+
+    box-shadow:
+        0 12px 40px rgba(0,0,0,0.6),
+        0 0 40px rgba(255, 82, 59, 0.12);
+}
+
+/* ===============================
+   🔥 NAV BUTTON STYLE
+================================ */
+nav ul li a {
+    position: relative;
+    padding: 8px 18px;
+    border-radius: 999px;
+
+    background: rgba(255, 82, 59, 0.12);
+    color: #222;
+    border: 1px solid rgba(255, 82, 59, 0.25);
+
+    box-shadow:
+        inset 0 0 0 rgba(0,0,0,0),
+        0 3px 8px rgba(0,0,0,0.08);
+
+    transition: all 0.25s ease;
+}
+
+nav ul li a:hover {
+    background: rgba(255, 82, 59, 0.22);
+    color: #ff523b;
+
+    box-shadow:
+        0 8px 22px rgba(255,82,59,0.35);
+
+    transform: translateY(-2px);
+}
+
+nav ul li a.active {
+    background: rgba(255, 82, 59, 0.28);
+    box-shadow:
+        0 8px 26px rgba(255,82,59,0.45);
+}
+
+/* ===============================
+   🌙 DARK MODE BUTTONS
+================================ */
+.darkmode nav ul li a {
+    background: rgba(255, 255, 255, 0.08);
+    color: #ffffff;
+    border: 1px solid rgba(255, 255, 255, 0.18);
+
+    box-shadow:
+        0 4px 12px rgba(0,0,0,0.4);
+}
+
+.darkmode nav ul li a:hover {
+    background: rgba(255, 82, 59, 0.4);
+    box-shadow:
+        0 10px 28px rgba(255,82,59,0.55);
+}
+
+/* ===============================
+   🛒 CART + THEME ICON
+================================ */
+.cart-wrapper:hover {
+    transform: translateY(-2px) scale(1.05);
+}
+
+#theme-switch:hover {
+    transform: rotate(15deg) scale(1.05);
+    box-shadow: 0 0 18px rgba(255, 82, 59, 0.6);
+}
+
+/* ===============================
+   MOBILE MENU ICON
+================================ */
+.menu-icon {
+    transition: transform 0.25s ease;
+}
+.menu-icon:hover {
+    transform: scale(1.15);
+}
+
+
+
+
+
+
+
+
 body{
     font-family: "Ancizar Sans", sans-serif;
     background-color: var(--base-colour);
@@ -394,12 +507,29 @@ form a{
         color: #fff;
       }
 
+        nav ul li {
+    margin: 13px 0;   /* 👈 লেখা গুলোর gap */
+  }
+
       .menu-icon{
         display: block;
         cursor: pointer;
       }
+
+      /* ================================
+   MOBILE MENU TEXT FIX (LIGHT MODE)
+   ================================ */
+@media (max-width: 768px) {
+  body:not(.darkmode) #MenuItems a {
+    color: #ffffff !important;
+  }
+
+  body:not(.darkmode) #MenuItems {
+    background: #111;
+  }
 }
 
+}
 /* media query for foe less then 600 scn size */
 
 @media only screen and (max-width: 600px) {
@@ -439,3 +569,176 @@ form a{
 
 
 
+
+/* cart count */
+
+.cart-wrapper {
+  position: relative;
+}
+
+#cart-count {
+  position: absolute;
+  top: -6px;
+  right: -10px;
+  background: #ff523b;
+  color: white;
+  font-size: 12px;
+  min-width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  transform: scale(0);
+  transition: transform 0.25s ease;
+}
+
+/* visible হলে */
+#cart-count.show {
+  transform: scale(1);
+}
+
+/* add to cart animation */
+#cart-count.bump {
+  animation: bump 0.35s ease;
+}
+
+@keyframes bump {
+  0%   { transform: scale(1); }
+  30%  { transform: scale(1.4); }
+  60%  { transform: scale(0.9); }
+  100% { transform: scale(1); }
+}
+
+
+
+
+
+/* ================= POPUP OVERLAY ================= */
+.popup-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  display: none;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+  animation: fadeOverlay 0.4s ease forwards;
+}
+
+/* ================= POPUP BOX ================= */
+.popup-box {
+  background: rgba(255, 255, 255, 0.92);
+  width: 340px;
+  padding: 30px 28px;
+  border-radius: 18px;
+  text-align: center;
+  transform: scale(0.85) translateY(25px);
+  opacity: 0;
+  animation: popupEnter 0.45s cubic-bezier(.4,0,.2,1) forwards;
+  box-shadow:
+    0 25px 60px rgba(0, 0, 0, 0.25),
+    inset 0 0 0 1px rgba(255,255,255,0.3);
+}
+
+/* ================= ICON ================= */
+.popup-icon {
+  width: 72px;
+  height: 72px;
+  margin: 0 auto 18px;
+  border-radius: 50%;
+  font-size: 34px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: pulseGlow 1.4s ease infinite;
+  box-shadow: 0 12px 30px rgba(0,0,0,0.25);
+}
+
+/* ================= TEXT ================= */
+.popup-box h2 {
+  font-size: 20px;
+  font-weight: 700;
+  margin-bottom: 6px;
+}
+
+.popup-box p {
+  font-size: 14px;
+  color: #555;
+  line-height: 1.5;
+  margin-bottom: 22px;
+}
+
+/* ================= BUTTON ================= */
+.popup-box button {
+  padding: 11px 30px;
+  border: none;
+  border-radius: 999px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #fff;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.popup-box button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+}
+
+/* ================= STATES ================= */
+
+/* SUCCESS */
+.popup-overlay.success .popup-icon {
+  background: linear-gradient(135deg, #28a745, #5edc8c);
+}
+
+.popup-overlay.success h2 {
+  color: #2ed355;
+}
+
+.popup-overlay.success button {
+  background: linear-gradient(135deg, #28a745, #5edc8c);
+}
+
+/* ERROR */
+.popup-overlay.error .popup-icon {
+  background: linear-gradient(135deg, #ff0019, #ff4d5a);
+}
+
+.popup-overlay.error h2 {
+  color: #ff0019;
+}
+
+.popup-overlay.error button {
+  background: linear-gradient(135deg, #ff0019, #ff4d5a);
+}
+
+/* ================= ANIMATIONS ================= */
+
+@keyframes popupEnter {
+  to {
+    transform: scale(1) translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes fadeOverlay {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes pulseGlow {
+  0% {
+    box-shadow: 0 0 0 0 rgba(0,0,0,0.25);
+  }
+  70% {
+    box-shadow: 0 0 0 14px rgba(0,0,0,0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(0,0,0,0);
+  }
+}
