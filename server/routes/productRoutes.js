@@ -165,4 +165,41 @@ router.delete("/:id", protect, isAdmin, async (req, res) => {
   }
 });
 
+/* =====================================================
+    ✅ GET PRODUCT STATS FOR ADMIN DASHBOARD
+===================================================== */
+
+router.get(
+  "/admin/product-stats",
+  protect,
+  isAdmin,
+  async (req, res) => {
+    try {
+      const products = await Product.find();
+
+      const stats = {
+        total: products.length,
+        sneakers: 0,
+        tshirt: 0,
+        pant: 0,
+        hoodie: 0,
+      };
+
+      products.forEach(p => {
+        if (p.category === "sneakers") stats.sneakers++;
+        if (p.category === "tshirt") stats.tshirt++;
+        if (p.category === "pant") stats.pant++;
+        if (p.category === "hoodie") stats.hoodie++;
+      });
+
+      res.json(stats);
+    } catch (err) {
+      console.error(err);
+      res.status(500).json({ message: "Server error" });
+    }
+  }
+);
+
+
+
 export default router;
