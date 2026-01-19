@@ -8,13 +8,21 @@ const userSchema = new mongoose.Schema({
 
 role: {
   type: String,
-  enum: ["user", "admin"],
+  enum: ["user", "moderator", "admin"],
   default: "user",
 },
 
 
+
 profileImage: {
-  type: String,
+  url: {
+    type: String,
+    default: "",
+  },
+  public_id: {
+    type: String,
+    default: "",
+  },
 },
 
 

@@ -33,7 +33,6 @@ fetch(apiUrl, { headers })
     console.error(err);
     alert("Failed to load invoice");
   });
-
 function renderInvoice(order) {
 
   document.getElementById("invoiceNo").innerText =
@@ -42,7 +41,7 @@ function renderInvoice(order) {
   document.getElementById("invoiceDate").innerText =
     new Date(order.createdAt).toLocaleDateString();
 
-  // ✅ BILL TO (user / guest)
+  // BILL TO
   const name = order.userInfo?.name || order.user?.name || "Guest";
   const address = order.userInfo?.address || order.user?.address || "N/A";
   const phone = order.userInfo?.phone || order.user?.phone || "N/A";
@@ -72,13 +71,14 @@ function renderInvoice(order) {
   body.innerHTML = "";
 
   order.items.forEach(i => {
-    const amount = i.price * i.quantity;
+    const qty = i.quantity ?? i.qty ?? 1;
+    const amount = i.price * qty;
     subtotal += amount;
 
     body.innerHTML += `
       <tr>
         <td>${i.name} ${i.size ? `(Size: ${i.size})` : ""}</td>
-        <td>${i.quantity}</td>
+        <td>${qty}</td>
         <td>${money(i.price)}</td>
         <td>-</td>
         <td>${money(amount)}</td>

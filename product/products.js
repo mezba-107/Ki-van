@@ -1,3 +1,12 @@
+function shuffleArray(array) {
+  for (let i = array.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [array[i], array[j]] = [array[j], array[i]];
+  }
+  return array;
+}
+
+
 const productList = document.getElementById("productList");
 const categorySelect = document.getElementById("categorySelect");
 const sortSelect = document.getElementById("sortSelect");
@@ -16,8 +25,12 @@ async function fetchProducts() {
     const res = await fetch("http://localhost:5000/api/products");
     const data = await res.json();
 
-    allProducts = data;
-    filteredProducts = [...allProducts]; // ✅ copy
+    // ✅ RANDOMIZE ONCE
+    allProducts = shuffleArray([...data]);
+
+    // ✅ FILTER SOURCE = RANDOM LIST
+    filteredProducts = [...allProducts];
+
     renderPage();
   } catch (err) {
     console.error("Product fetch error:", err);
@@ -52,7 +65,7 @@ function renderProducts(products) {
     productList.innerHTML += `
       <div class="col-4">
         <a href="/product/single-product.html?id=${product._id}">
-          <img src="http://localhost:5000${product.image}" alt="${product.name}">
+          <img src="${product.image?.url || "/images/no-image.png"}"  alt="${product.name}">
           <h4>${product.name}</h4>
         </a>
         <p> PRICE  : ৳ ${product.price}</p>

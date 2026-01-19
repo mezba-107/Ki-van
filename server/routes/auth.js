@@ -3,7 +3,11 @@ import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import crypto from "crypto";
 import User from "../models/user.js";
+import upload, { profileUpload } from "../middleware/upload.js";
+import authMiddleware from "../middleware/auth.js";
+import { updateProfileImage } from "../controllers/authController.js";
 import { sendResetEmail } from "../utils/email.js";
+
 
 const router = express.Router();
 
@@ -31,8 +35,19 @@ router.post("/signup", async (req, res) => {
 
     await newUser.save();
 
+    // 🔥 TOKEN GENERATE (THIS WAS MISSING)
+    const token = jwt.sign(
+      {
+        userId: newUser._id,
+        role: newUser.role,
+      },
+      process.env.JWT_SECRET,
+      { expiresIn: "7d" }
+    );
+
     res.status(201).json({
       message: "Signup successful",
+      token, // ✅ VERY IMPORTANT
       user: {
         id: newUser._id,
         name: newUser.name,
@@ -43,6 +58,7 @@ router.post("/signup", async (req, res) => {
     res.status(500).json({ message: "Server error", error: err.message });
   }
 });
+
 
 /* ============================================================
   LOGIN
@@ -87,20 +103,18 @@ router.post("/login", async (req, res) => {
   }
 });
 
+
 /* ============================================================
   UPDATE PROFILE IMAGE
 ============================================================ */
 
-import upload from "../middleware/profileUpload.js";
-import { updateProfileImage } from "../controllers/authController.js";
-import protect from "../middleware/auth.js";
-
 router.put(
-  "/update-profile-image",
-  protect,
-  upload.single("image"),
+  "/profile-pic",
+  authMiddleware,
+  profileUpload.single("profile"),
   updateProfileImage
 );
+
 
 
 /* ============================================================
@@ -185,9 +199,6 @@ router.put("/update-city", async (req, res) => {
 });
 
 
-
-
-import authMiddleware from "../middleware/auth.js";
 
 /* ============================================================
   RESET PASSWORD (Profile → Current + New Pass)
